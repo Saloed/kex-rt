@@ -25,7 +25,6 @@
 
 package kex.java.util;
 
-import org.jetbrains.research.kex.CollectionIntrinsics;
 
 import java.util.*;
 
