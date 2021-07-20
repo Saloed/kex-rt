@@ -188,18 +188,11 @@ public class HashMap<K, V> extends AbstractMap<K, V>
     @Override
     public V remove(Object key) {
         Node<K, V> result = new Node<>(null, null);
-        CollectionIntrinsics.firstOfEach(0, size, (index, cond) -> {
-            if (!cond) {
-                if (ObjectIntrinsics.equals(table[index].key, key)) {
-                    Node<K, V> res = fastRemove(index);
-                    result.key = res.key;
-                    result.value = res.value;
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
+        CollectionIntrinsics.forEach(0, size, index -> {
+            if (ObjectIntrinsics.equals(table[index].key, key)) {
+                Node<K, V> res = fastRemove(index);
+                result.key = res.key;
+                result.value = res.value;
             }
         });
         return result.value;

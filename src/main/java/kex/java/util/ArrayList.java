@@ -190,35 +190,12 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     @Override
     public boolean remove(Object o) {
-        boolean result = true;
-        if (o == null) {
-            result = CollectionIntrinsics.firstOfEach(0, size, (index, cond) -> {
-                if (!cond) {
-                    if (elementData[index] == null) {
-                        fastRemove(index);
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            });
-        } else {
-            result = CollectionIntrinsics.firstOfEach(0, size, (index, cond) -> {
-                if (!cond) {
-                    if (ObjectIntrinsics.equals(o, elementData[index])) {
-                        fastRemove(index);
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            });
-        }
-        return result;
+        CollectionIntrinsics.forEach(0, size, index -> {
+            if (ObjectIntrinsics.equals(elementData[index], o)) {
+                fastRemove(index);
+            }
+        });
+        return true;
     }
 
     private void fastRemove(int index) {
@@ -279,26 +256,24 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     public boolean removeAll(Collection<?> c) {
         AssertIntrinsics.kexNotNull(c);
         Object[] other = c.toArray();
-        return CollectionIntrinsics.anyOfEach(0, other.length, index -> {
+        CollectionIntrinsics.forEach(0, other.length, index -> {
             if (CollectionIntrinsics.contains(elementData, other[index])) {
                 remove(other[index]);
-                return true;
             }
-            return false;
         });
+        return true;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
         AssertIntrinsics.kexNotNull(c);
         Object[] other = c.toArray();
-        return CollectionIntrinsics.anyOfEach(0, other.length, index -> {
+        CollectionIntrinsics.forEach(0, other.length, index -> {
             if (!CollectionIntrinsics.contains(elementData, other[index])) {
                 remove(other[index]);
-                return true;
             }
-            return false;
         });
+        return true;
     }
 
     @Override
