@@ -25,7 +25,7 @@
 
 package kex.java.lang;
 
-import org.jetbrains.research.kex.ObjectIntrinsics;
+import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
 
 public class Short extends Number implements Comparable<Short> {
     public static final int SIZE = 16;

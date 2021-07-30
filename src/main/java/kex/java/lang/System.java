@@ -25,9 +25,9 @@
 
 package kex.java.lang;
 
-import org.jetbrains.research.kex.AssertIntrinsics;
-import org.jetbrains.research.kex.CollectionIntrinsics;
-import org.jetbrains.research.kex.UnknownIntrinsics;
+import org.jetbrains.research.kex.intrinsics.AssertIntrinsics;
+import org.jetbrains.research.kex.intrinsics.CollectionIntrinsics;
+import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
 
 import java.io.Console;
 import java.io.IOException;

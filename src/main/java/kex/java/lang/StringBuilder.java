@@ -25,7 +25,7 @@
 
 package kex.java.lang;
 
-import org.jetbrains.research.kex.ObjectIntrinsics;
+import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
 
 public class StringBuilder extends AbstractStringBuilder implements java.io.Serializable, CharSequence {
 

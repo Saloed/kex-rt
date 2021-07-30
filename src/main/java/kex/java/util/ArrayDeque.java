@@ -34,7 +34,7 @@
 
 package kex.java.util;
 
-import org.jetbrains.research.kex.UnknownIntrinsics;
+import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
 
 import java.io.Serializable;
 import java.util.*;

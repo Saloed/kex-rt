@@ -25,7 +25,7 @@
 
 package kex.java.lang;
 
-import org.jetbrains.research.kex.ObjectIntrinsics;
+import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
 
 public class Boolean implements java.io.Serializable, Comparable<Boolean> {
     public static final Boolean TRUE = new Boolean(true);

@@ -1,10 +1,10 @@
 package kex.java.lang;
 
 import kex.java.util.Arrays;
-import org.jetbrains.research.kex.AssertIntrinsics;
-import org.jetbrains.research.kex.CollectionIntrinsics;
-import org.jetbrains.research.kex.UnknownIntrinsics;
-import org.jetbrains.research.kex.ObjectIntrinsics;
+import org.jetbrains.research.kex.intrinsics.AssertIntrinsics;
+import org.jetbrains.research.kex.intrinsics.CollectionIntrinsics;
+import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
+import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
 
 public abstract class AbstractStringBuilder implements Appendable, CharSequence {
     char[] value;

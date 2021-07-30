@@ -25,7 +25,7 @@
 
 package kex.java.util;
 
-import org.jetbrains.research.kex.UnknownIntrinsics;
+import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
 
 import java.util.*;
 import java.util.function.Consumer;

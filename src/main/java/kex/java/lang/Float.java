@@ -25,7 +25,7 @@
 
 package kex.java.lang;
 
-import org.jetbrains.research.kex.ObjectIntrinsics;
+import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
 import kex.sun.misc.FloatConsts;
 
 public class Float extends Number implements Comparable<Float> {

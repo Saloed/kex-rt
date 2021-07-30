@@ -25,9 +25,9 @@
 
 package kex.java.util;
 
-import org.jetbrains.research.kex.AssertIntrinsics;
-import org.jetbrains.research.kex.CollectionIntrinsics;
-import org.jetbrains.research.kex.ObjectIntrinsics;
+import org.jetbrains.research.kex.intrinsics.AssertIntrinsics;
+import org.jetbrains.research.kex.intrinsics.CollectionIntrinsics;
+import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
 
 import java.util.function.IntFunction;
 import java.util.function.IntToDoubleFunction;
