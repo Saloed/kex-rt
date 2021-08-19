@@ -123,15 +123,10 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         return Arrays.copyOf(elementData, size);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T[] toArray(T[] a) {
-        if (a.length < size)
-            // Make a new array of a's runtime type, but my contents:
-            return (T[]) Arrays.copyOf(elementData, size, a.getClass());
-        CollectionIntrinsics.arrayCopy(elementData, 0, a, 0, size);
-        if (a.length > size)
-            a[size] = null;
-        return a;
+        return (T[]) Arrays.copyOf(elementData, size, a.getClass());
     }
 
     private void rangeCheck(int index) {
@@ -144,12 +139,14 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
             throw new IndexOutOfBoundsException("" + index);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public E get(int index) {
         rangeCheck(index);
         return (E) elementData[index];
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public E set(int index, E element) {
         rangeCheck(index);
@@ -170,7 +167,10 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     public void add(int index, E element) {
         rangeCheckForAdd(index);
         ensureCapacityInternal(size + 1);
-        CollectionIntrinsics.arrayCopy(elementData, index, elementData, index + 1, size - index);
+        elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> {
+            if (i < index) return elementData[i];
+            return elementData[i + 1];
+        });
         elementData[index] = element;
         size++;
     }
@@ -183,34 +183,27 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
         int numMoved = size - index - 1;
         if (numMoved > 0)
-            CollectionIntrinsics.arrayCopy(elementData, index + 1, elementData, index, numMoved);
+            elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> {
+                if (i < index) return elementData[i];
+                return elementData[i - 1];
+            });
         elementData[--size] = null;
         return oldValue;
     }
 
     @Override
     public boolean remove(Object o) {
-        CollectionIntrinsics.forEach(0, size, index -> {
-            if (ObjectIntrinsics.equals(elementData[index], o)) {
-                fastRemove(index);
-            }
-        });
+//        CollectionIntrinsics.forEach(0, size, index -> {
+//            if (ObjectIntrinsics.equals(elementData[index], o)) {
+//                fastRemove(index);
+//            }
+//        });
         return true;
-    }
-
-    private void fastRemove(int index) {
-        int numMoved = size - index - 1;
-        if (numMoved > 0)
-            CollectionIntrinsics.arrayCopy(elementData, index + 1, elementData, index, numMoved);
-        elementData[--size] = null;
     }
 
     @Override
     public void clear() {
-        CollectionIntrinsics.forEach(0, elementData.length, index -> {
-            elementData[index] = null;
-        });
-
+        elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> null);
         size = 0;
     }
 
@@ -219,7 +212,10 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         Object[] a = c.toArray();
         int numNew = a.length;
         ensureCapacityInternal(size + numNew);
-        CollectionIntrinsics.arrayCopy(a, 0, elementData, size, numNew);
+        elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> {
+            if (i < size) return elementData[i];
+            return a[i - size];
+        });
         size += numNew;
         return numNew != 0;
     }
@@ -233,46 +229,48 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         ensureCapacityInternal(size + numNew);
 
         int numMoved = size - index;
-        if (numMoved > 0)
-            CollectionIntrinsics.arrayCopy(elementData, index, elementData, index + numNew, numMoved);
-
-        CollectionIntrinsics.arrayCopy(a, 0, elementData, index, numNew);
+        elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> {
+            if (i < index) return elementData[i];
+            if (i < index + numMoved) return a[i - index];
+            if (i + numMoved < elementData.length) return elementData[i + numMoved];
+            return null;
+        });
         size += numNew;
         return numNew != 0;
     }
 
     protected void removeRange(int fromIndex, int toIndex) {
-        int numMoved = size - toIndex;
-        CollectionIntrinsics.arrayCopy(elementData, toIndex, elementData, fromIndex, numMoved);
-
-        int newSize = size - (toIndex - fromIndex);
-        CollectionIntrinsics.forEach(newSize, size, index -> {
-            elementData[index] = null;
+        int numMoved = toIndex - fromIndex;
+        elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> {
+            if (i < fromIndex) return elementData[i];
+            if (i + numMoved < elementData.length) return elementData[i + numMoved];
+            return null;
         });
-        size = newSize;
+
+        size = size - (toIndex - fromIndex);
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        AssertIntrinsics.kexNotNull(c);
-        Object[] other = c.toArray();
-        CollectionIntrinsics.forEach(0, other.length, index -> {
-            if (CollectionIntrinsics.contains(elementData, other[index])) {
-                remove(other[index]);
-            }
-        });
+//        AssertIntrinsics.kexNotNull(c);
+//        Object[] other = c.toArray();
+//        CollectionIntrinsics.forEach(0, other.length, index -> {
+//            if (CollectionIntrinsics.contains(elementData, other[index])) {
+//                remove(other[index]);
+//            }
+//        });
         return true;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        AssertIntrinsics.kexNotNull(c);
-        Object[] other = c.toArray();
-        CollectionIntrinsics.forEach(0, other.length, index -> {
-            if (!CollectionIntrinsics.contains(elementData, other[index])) {
-                remove(other[index]);
-            }
-        });
+//        AssertIntrinsics.kexNotNull(c);
+//        Object[] other = c.toArray();
+//        CollectionIntrinsics.forEach(0, other.length, index -> {
+//            if (!CollectionIntrinsics.contains(elementData, other[index])) {
+//                remove(other[index]);
+//            }
+//        });
         return true;
     }
 
@@ -379,16 +377,16 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     @Override
     public void forEach(Consumer<? super E> action) {
-        AssertIntrinsics.kexNotNull(action);
-        final int expectedModCount = modCount;
-        @SuppressWarnings("unchecked") final E[] elementData = (E[]) this.elementData;
-        final int size = this.size;
-        CollectionIntrinsics.forEach(0, size, index -> {
-            action.accept(elementData[index]);
-        });
-        if (modCount != expectedModCount) {
-            throw new ConcurrentModificationException();
-        }
+//        AssertIntrinsics.kexNotNull(action);
+//        final int expectedModCount = modCount;
+//        @SuppressWarnings("unchecked") final E[] elementData = (E[]) this.elementData;
+//        final int size = this.size;
+//        CollectionIntrinsics.forEach(0, size, index -> {
+//            action.accept(elementData[index]);
+//        });
+//        if (modCount != expectedModCount) {
+//            throw new ConcurrentModificationException();
+//        }
     }
 
     @Override

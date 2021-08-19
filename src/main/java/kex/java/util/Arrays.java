@@ -34,6 +34,7 @@ import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
 
+// todo: contracts for: fill, setAll
 public class Arrays {
     private static final int MIN_ARRAY_SORT_GRAN = 1 << 13;
 
@@ -73,135 +74,63 @@ public class Arrays {
         return ObjectIntrinsics.equals(a, a2);
     }
 
-    public static void fill(long[] a, long val) {
-        CollectionIntrinsics.forEach(0, a.length, index -> a[index] = val);
-    }
-
-    public static void fill(long[] a, int fromIndex, int toIndex, long val) {
-        CollectionIntrinsics.forEach(fromIndex, toIndex, index -> a[index] = val);
-    }
-
-    public static void fill(int[] a, int val) {
-        CollectionIntrinsics.forEach(0, a.length, index -> a[index] = val);
-    }
-
-    public static void fill(int[] a, int fromIndex, int toIndex, int val) {
-        CollectionIntrinsics.forEach(fromIndex, toIndex , index -> a[index] = val);
-    }
-
-    public static void fill(short[] a, short val) {
-        CollectionIntrinsics.forEach(0, a.length, index -> a[index] = val);
-    }
-
-    public static void fill(short[] a, int fromIndex, int toIndex, short val) {
-        CollectionIntrinsics.forEach(fromIndex, toIndex, index -> a[index] = val);
-    }
-
-    public static void fill(char[] a, char val) {
-        CollectionIntrinsics.forEach(0, a.length, index -> a[index] = val);
-    }
-
-    public static void fill(char[] a, int fromIndex, int toIndex, char val) {
-        CollectionIntrinsics.forEach(fromIndex, toIndex, index -> a[index] = val);
-    }
-
-    public static void fill(byte[] a, byte val) {
-        CollectionIntrinsics.forEach(0, a.length, index -> a[index] = val);
-    }
-
-    public static void fill(byte[] a, int fromIndex, int toIndex, byte val) {
-        CollectionIntrinsics.forEach(fromIndex, toIndex, index -> a[index] = val);
-    }
-
-    public static void fill(boolean[] a, boolean val) {
-        CollectionIntrinsics.forEach(0, a.length, index -> a[index] = val);
-    }
-
-    public static void fill(boolean[] a, int fromIndex, int toIndex, boolean val) {
-        CollectionIntrinsics.forEach(fromIndex, toIndex, index -> a[index] = val);
-    }
-
-    public static void fill(double[] a, double val) {
-        CollectionIntrinsics.forEach(0, a.length, index -> a[index] = val);
-    }
-
-    public static void fill(double[] a, int fromIndex, int toIndex, double val) {
-        CollectionIntrinsics.forEach(fromIndex, toIndex, index -> a[index] = val);
-    }
-
-    public static void fill(float[] a, float val) {
-        CollectionIntrinsics.forEach(0, a.length, index -> a[index] = val);
-    }
-
-    public static void fill(float[] a, int fromIndex, int toIndex, float val) {
-        CollectionIntrinsics.forEach(fromIndex, toIndex, index -> a[index] = val);
-    }
-
-    public static void fill(Object[] a, Object val) {
-        CollectionIntrinsics.forEach(0, a.length, index -> a[index] = val);
-    }
-
-    public static void fill(Object[] a, int fromIndex, int toIndex, Object val) {
-        CollectionIntrinsics.forEach(fromIndex, toIndex, index -> a[index] = val);
-    }
-
     public static <T> T[] copyOf(T[] original, int newLength) {
         return (T[]) copyOf(original, newLength, original.getClass());
     }
 
     // todo copies
     public static <T, U> T[] copyOf(U[] original, int newLength, Class<? extends T[]> newType) {
-        T[] copy = (T[]) new Object[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length, newLength), index -> copy[index] = (T) original[index]);
-        return copy;
+        return CollectionIntrinsics.generateObjectArray(Math.max(original.length, newLength), index -> {
+            return (T) original[index];
+        });
     }
 
     public static byte[] copyOf(byte[] original, int newLength) {
-        byte[] copy = new byte[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length, newLength), index -> copy[index] = original[index]);
-        return copy;
+        return CollectionIntrinsics.generateByteArray(Math.max(original.length, newLength), index -> {
+            return original[index];
+        });
     }
 
     public static short[] copyOf(short[] original, int newLength) {
-        short[] copy = new short[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length, newLength), index -> copy[index] = original[index]);
-        return copy;
+        return CollectionIntrinsics.generateShortArray(Math.max(original.length, newLength), index -> {
+            return original[index];
+        });
     }
 
     public static int[] copyOf(int[] original, int newLength) {
-        int[] copy = new int[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length, newLength), index -> copy[index] = original[index]);
-        return copy;
+        return CollectionIntrinsics.generateIntArray(Math.max(original.length, newLength), index -> {
+            return original[index];
+        });
     }
 
     public static long[] copyOf(long[] original, int newLength) {
-        long[] copy = new long[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length, newLength), index -> copy[index] = original[index]);
-        return copy;
+        return CollectionIntrinsics.generateLongArray(Math.max(original.length, newLength), index -> {
+            return original[index];
+        });
     }
 
     public static char[] copyOf(char[] original, int newLength) {
-        char[] copy = new char[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length, newLength), index -> copy[index] = original[index]);
-        return copy;
+        return CollectionIntrinsics.generateCharArray(Math.max(original.length, newLength), index -> {
+            return original[index];
+        });
     }
 
     public static float[] copyOf(float[] original, int newLength) {
-        float[] copy = new float[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length, newLength), index -> copy[index] = original[index]);
-        return copy;
+        return CollectionIntrinsics.generateFloatArray(Math.max(original.length, newLength), index -> {
+            return original[index];
+        });
     }
 
     public static double[] copyOf(double[] original, int newLength) {
-        double[] copy = new double[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length, newLength), index -> copy[index] = original[index]);
-        return copy;
+        return CollectionIntrinsics.generateDoubleArray(Math.max(original.length, newLength), index -> {
+            return original[index];
+        });
     }
 
     public static boolean[] copyOf(boolean[] original, int newLength) {
-        boolean[] copy = new boolean[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length, newLength), index -> copy[index] = original[index]);
-        return copy;
+        return CollectionIntrinsics.generateBoolArray(Math.max(original.length, newLength), index -> {
+            return original[index];
+        });
     }
 
 
@@ -215,121 +144,81 @@ public class Arrays {
         int newLength = to - from;
         if (newLength < 0)
             throw new IllegalArgumentException(from + " > " + to);
-        T[] copy = (T[]) new Object[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length - from, newLength), index -> copy[index] = (T) original[from + index]);
-        return copy;
+        return CollectionIntrinsics.generateObjectArray(newLength, index -> {
+            return (T) original[from + index];
+        });
     }
 
     public static byte[] copyOfRange(byte[] original, int from, int to) {
         int newLength = to - from;
         if (newLength < 0)
             throw new IllegalArgumentException(from + " > " + to);
-        byte[] copy = new byte[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length - from, newLength), index -> copy[index] = original[from + index]);
-        return copy;
+        return CollectionIntrinsics.generateByteArray(newLength, index -> {
+            return original[from + index];
+        });
     }
 
     public static short[] copyOfRange(short[] original, int from, int to) {
         int newLength = to - from;
         if (newLength < 0)
             throw new IllegalArgumentException(from + " > " + to);
-        short[] copy = new short[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length - from, newLength), index -> copy[index] = original[from + index]);
-        return copy;
+        return CollectionIntrinsics.generateShortArray(newLength, index -> {
+            return original[from + index];
+        });
     }
 
     public static int[] copyOfRange(int[] original, int from, int to) {
         int newLength = to - from;
         if (newLength < 0)
             throw new IllegalArgumentException(from + " > " + to);
-        int[] copy = new int[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length - from, newLength), index -> copy[index] = original[from + index]);
-        return copy;
+        return CollectionIntrinsics.generateIntArray(newLength, index -> {
+            return original[from + index];
+        });
     }
 
     public static long[] copyOfRange(long[] original, int from, int to) {
         int newLength = to - from;
         if (newLength < 0)
             throw new IllegalArgumentException(from + " > " + to);
-        long[] copy = new long[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length - from, newLength), index -> copy[index] = original[from + index]);
-        return copy;
+        return CollectionIntrinsics.generateLongArray(newLength, index -> {
+            return original[from + index];
+        });
     }
 
     public static char[] copyOfRange(char[] original, int from, int to) {
         int newLength = to - from;
         if (newLength < 0)
             throw new IllegalArgumentException(from + " > " + to);
-        char[] copy = new char[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length - from, newLength), index -> copy[index] = original[from + index]);
-        return copy;
+        return CollectionIntrinsics.generateCharArray(newLength, index -> {
+            return original[from + index];
+        });
     }
 
     public static float[] copyOfRange(float[] original, int from, int to) {
         int newLength = to - from;
         if (newLength < 0)
             throw new IllegalArgumentException(from + " > " + to);
-        float[] copy = new float[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length - from, newLength), index -> copy[index] = original[from + index]);
-        return copy;
+        return CollectionIntrinsics.generateFloatArray(newLength, index -> {
+            return original[from + index];
+        });
     }
 
     public static double[] copyOfRange(double[] original, int from, int to) {
         int newLength = to - from;
         if (newLength < 0)
             throw new IllegalArgumentException(from + " > " + to);
-        double[] copy = new double[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length - from, newLength), index -> copy[index] = original[from + index]);
-        return copy;
+        return CollectionIntrinsics.generateDoubleArray(newLength, index -> {
+            return original[from + index];
+        });
     }
 
     public static boolean[] copyOfRange(boolean[] original, int from, int to) {
         int newLength = to - from;
         if (newLength < 0)
             throw new IllegalArgumentException(from + " > " + to);
-        boolean[] copy = new boolean[newLength];
-        CollectionIntrinsics.forEach(0, Math.max(original.length - from, newLength), index -> copy[index] = original[from + index]);
-        return copy;
-    }
-
-
-    public static <T> void setAll(T[] array, IntFunction<? extends T> generator) {
-        AssertIntrinsics.kexNotNull(array);
-        CollectionIntrinsics.forEach(0, array.length, index -> array[index] = generator.apply(index));
-    }
-
-    public static <T> void parallelSetAll(T[] array, IntFunction<? extends T> generator) {
-        AssertIntrinsics.kexNotNull(array);
-        CollectionIntrinsics.forEach(0, array.length, index -> array[index] = generator.apply(index));
-    }
-
-    public static void setAll(int[] array, IntUnaryOperator generator) {
-        AssertIntrinsics.kexNotNull(array);
-        CollectionIntrinsics.forEach(0, array.length, index -> array[index] = generator.applyAsInt(index));
-    }
-
-    public static void parallelSetAll(int[] array, IntUnaryOperator generator) {
-        AssertIntrinsics.kexNotNull(array);
-        CollectionIntrinsics.forEach(0, array.length, index -> array[index] = generator.applyAsInt(index));
-    }
-
-    public static void setAll(long[] array, IntToLongFunction generator) {
-        AssertIntrinsics.kexNotNull(array);
-        CollectionIntrinsics.forEach(0, array.length, index -> array[index] = generator.applyAsLong(index));
-    }
-
-    public static void parallelSetAll(long[] array, IntToLongFunction generator) {
-        AssertIntrinsics.kexNotNull(array);
-        CollectionIntrinsics.forEach(0, array.length, index -> array[index] = generator.applyAsLong(index));
-    }
-
-    public static void setAll(double[] array, IntToDoubleFunction generator) {
-        AssertIntrinsics.kexNotNull(array);
-        CollectionIntrinsics.forEach(0, array.length, index -> array[index] = generator.applyAsDouble(index));
-    }
-    public static void parallelSetAll(double[] array, IntToDoubleFunction generator) {
-        AssertIntrinsics.kexNotNull(array);
-        CollectionIntrinsics.forEach(0, array.length - 1, index -> array[index] = generator.applyAsDouble(index));
+        return CollectionIntrinsics.generateBoolArray(newLength, index -> {
+            return original[from + index];
+        });
     }
 
     private Arrays() {
