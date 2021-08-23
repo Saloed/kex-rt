@@ -886,7 +886,7 @@ public final class Long extends Number implements Comparable<Long> {
     /**
      * Not supported, returns an unknown value
      */
-    public static Long getLong(String nm, java.lang.Long val) {
+    public static Long getLong(String nm, Long val) {
         return UnknownIntrinsics.kexUnknown();
     }
 

@@ -26,7 +26,6 @@
 package kex.java.lang;
 
 import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
-import sun.reflect.CallerSensitive;
 
 import java.io.*;
 import java.nio.channels.Channel;
@@ -922,7 +921,6 @@ public final class System {
      * @see java.lang.Runtime#load(java.lang.String)
      * @see java.lang.SecurityManager#checkLink(java.lang.String)
      */
-    @CallerSensitive
     public static void load(String filename) {
     }
 
@@ -957,7 +955,6 @@ public final class System {
      * @see java.lang.Runtime#loadLibrary(java.lang.String)
      * @see java.lang.SecurityManager#checkLink(java.lang.String)
      */
-    @CallerSensitive
     public static void loadLibrary(String libname) {
     }
 
