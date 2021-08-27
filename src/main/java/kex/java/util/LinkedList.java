@@ -43,6 +43,10 @@ public class LinkedList<E>
         inner = new ArrayList<>();
     }
 
+    public LinkedList(Collection<? extends E> c) {
+        inner = new ArrayList<>(c);
+    }
+
     @Override
     public void addFirst(E e) {
         inner.add(0, e);
