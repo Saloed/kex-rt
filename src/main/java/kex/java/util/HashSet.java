@@ -26,6 +26,8 @@
 package kex.java.util;
 
 
+import org.jetbrains.research.kex.intrinsics.AssertIntrinsics;
+
 import java.util.*;
 
 public class HashSet<E>
@@ -56,26 +58,31 @@ public class HashSet<E>
 
     @Override
     public Iterator<E> iterator() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.iterator();
     }
 
     @Override
     public int size() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.size();
     }
 
     @Override
     public boolean isEmpty() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.contains(o);
     }
 
     @Override
     public boolean add(E e) {
+        AssertIntrinsics.kexNotNull(inner);
         if (!inner.contains(e)) {
             return inner.add(e);
         }
@@ -84,16 +91,19 @@ public class HashSet<E>
 
     @Override
     public boolean remove(Object o) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.remove(o);
     }
 
     @Override
     public void clear() {
+        AssertIntrinsics.kexNotNull(inner);
         inner.clear();
     }
 
     @Override
     public Object clone() {
+        AssertIntrinsics.kexNotNull(inner);
         HashSet<E> v = new HashSet<>();
         v.inner = (ArrayList<E>) inner.clone();
         return v;
@@ -101,6 +111,7 @@ public class HashSet<E>
 
     @Override
     public Spliterator<E> spliterator() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.spliterator();
     }
 }

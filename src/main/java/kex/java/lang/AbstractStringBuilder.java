@@ -86,6 +86,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      */
     @Override
     public int length() {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         return count;
     }
 
@@ -97,6 +99,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      * @return the current capacity
      */
     public int capacity() {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         return value.length;
     }
 
@@ -139,6 +143,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      * returned by a subsequent call to the {@link #capacity()} method.
      */
     public void trimToSize() {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if (count < value.length) {
             value = Arrays.copyOf(value, count);
         }
@@ -168,6 +174,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      * @param newLength the new length
      */
     public void setLength(int newLength) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         AssertIntrinsics.kexAssume(newLength >= 0);
         ensureCapacityInternal(newLength);
 
@@ -198,6 +206,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      */
     @Override
     public char charAt(int index) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if ((index < 0) || (index >= count))
             throw new StringIndexOutOfBoundsException(index);
         return value[index];
@@ -260,6 +270,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      *                                   </ul>
      */
     public void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if (srcBegin < 0)
             throw new StringIndexOutOfBoundsException(srcBegin);
         if ((srcEnd < 0) || (srcEnd > count))
@@ -291,6 +303,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      *                                   negative or greater than or equal to {@code length()}.
      */
     public void setCharAt(int index, char ch) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if ((index < 0) || (index >= count))
             throw new StringIndexOutOfBoundsException(index);
         value[index] = ch;
@@ -330,6 +344,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      * @return a reference to this object.
      */
     public AbstractStringBuilder append(String str) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if (str == null)
             return appendNull();
         char[] strChars = str.toCharArray();
@@ -346,6 +362,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
 
     // Documentation in subclasses because of synchro difference
     public AbstractStringBuilder append(StringBuffer sb) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if (sb == null)
             return appendNull();
         char[] strChars = sb.toCharArray();
@@ -364,6 +382,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      * @since 1.8
      */
     AbstractStringBuilder append(AbstractStringBuilder asb) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if (asb == null)
             return appendNull();
         char[] strChars = asb.toCharArray();
@@ -381,6 +401,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
     // Documentation in subclasses because of synchro difference
     @Override
     public AbstractStringBuilder append(CharSequence s) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if (s == null)
             return appendNull();
         if (s instanceof String)
@@ -434,6 +456,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      */
     @Override
     public AbstractStringBuilder append(CharSequence s, int start, int end) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if (s == null)
             s = "null";
         if ((start < 0) || (start > end) || (end > s.length()))
@@ -466,6 +490,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      * @return a reference to this object.
      */
     public AbstractStringBuilder append(char[] str) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         int len = str.length;
         ensureCapacityInternal(count + len);
         value = CollectionIntrinsics.generateCharArray(value.length, index -> {
@@ -499,6 +525,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      *                                   or {@code offset+len > str.length}
      */
     public AbstractStringBuilder append(char[] str, int offset, int len) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if (len > 0)
             ensureCapacityInternal(count + len);
         value = CollectionIntrinsics.generateCharArray(value.length, index -> {
@@ -523,6 +551,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      * @return a reference to this object.
      */
     public AbstractStringBuilder append(boolean b) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if (b) {
             ensureCapacityInternal(count + 4);
             value[count++] = 't';
@@ -557,6 +587,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      */
     @Override
     public AbstractStringBuilder append(char c) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         ensureCapacityInternal(count + 1);
         value[count++] = c;
         return this;
@@ -641,6 +673,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      *             greater than {@code end}.
      */
     public AbstractStringBuilder delete(int start, int end) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if (start < 0)
             throw new StringIndexOutOfBoundsException(start);
         if (end > count)
@@ -684,6 +718,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      *              {@code length()}.
      */
     public AbstractStringBuilder deleteCharAt(int index) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if ((index < 0) || (index >= count))
             throw new StringIndexOutOfBoundsException(index);
         value = CollectionIntrinsics.generateCharArray(value.length, i -> {
@@ -715,6 +751,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      *             greater than {@code end}.
      */
     public AbstractStringBuilder replace(int start, int end, String str) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if (start < 0)
             throw new StringIndexOutOfBoundsException(start);
         if (start > count)
@@ -805,6 +843,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      *             greater than {@code end}.
      */
     public String substring(int start, int end) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if (start < 0)
             throw new StringIndexOutOfBoundsException(start);
         if (end > count)
@@ -836,6 +876,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      *             {@code str.length}.
      */
     public AbstractStringBuilder insert(int index, char[] str, int offset, int len) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         if ((index < 0) || (index > length()))
             throw new StringIndexOutOfBoundsException(index);
         if ((offset < 0) || (len < 0) || (offset > str.length - len))
@@ -1063,6 +1105,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      * @throws     IndexOutOfBoundsException  if the offset is invalid.
      */
     public AbstractStringBuilder insert(int offset, char c) {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         ensureCapacityInternal(count + 1);
         value = CollectionIntrinsics.generateCharArray(value.length, i -> {
             if (i < offset) return value[offset];
@@ -1217,6 +1261,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      * @return  a reference to this object.
      */
     public AbstractStringBuilder reverse() {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         value = CollectionIntrinsics.generateCharArray(value.length, index -> value[value.length - index - 1]);
         return this;
     }
@@ -1240,6 +1286,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      * Needed by {@code String} for the contentEquals method.
      */
     final char[] getValue() {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         return value;
     }
 
@@ -1250,6 +1298,8 @@ public abstract class AbstractStringBuilder implements Appendable, CharSequence 
      * and whose contents are initialized to contain the character sequence represented by this string builder.
      */
     public char[] toCharArray() {
+        AssertIntrinsics.kexNotNull(value);
+        AssertIntrinsics.kexAssume(count >= 0);
         return CollectionIntrinsics.generateCharArray(count, index -> value[index]);
     }
 }

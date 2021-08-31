@@ -25,6 +25,7 @@
 
 package kex.java.util;
 
+import org.jetbrains.research.kex.intrinsics.AssertIntrinsics;
 import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
 
 import java.util.*;
@@ -49,43 +50,51 @@ public class LinkedList<E>
 
     @Override
     public void addFirst(E e) {
+        AssertIntrinsics.kexNotNull(inner);
         inner.add(0, e);
     }
 
     @Override
     public void addLast(E e) {
+        AssertIntrinsics.kexNotNull(inner);
         inner.add(e);
     }
 
     @Override
     public boolean contains(Object o) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.contains(o);
     }
 
     @Override
     public boolean offerFirst(E e) {
+        AssertIntrinsics.kexNotNull(inner);
         inner.add(0, e);
         return true;
     }
 
     @Override
     public boolean offerLast(E e) {
+        AssertIntrinsics.kexNotNull(inner);
         inner.add(e);
         return true;
     }
 
     @Override
     public E removeFirst() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.remove(0);
     }
 
     @Override
     public E removeLast() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.remove(inner.size() - 1);
     }
 
     @Override
     public E pollFirst() {
+        AssertIntrinsics.kexNotNull(inner);
         E res = inner.get(0);
         inner.remove(0);
         return res;
@@ -93,6 +102,7 @@ public class LinkedList<E>
 
     @Override
     public E pollLast() {
+        AssertIntrinsics.kexNotNull(inner);
         E res = inner.get(inner.size() - 1);
         inner.remove(inner.size() - 1);
         return res;
@@ -100,31 +110,37 @@ public class LinkedList<E>
 
     @Override
     public E getFirst() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.get(0);
     }
 
     @Override
     public E getLast() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.get(inner.size() - 1);
     }
 
     @Override
     public E peekFirst() {
+        AssertIntrinsics.kexNotNull(inner);
         return getFirst();
     }
 
     @Override
     public E peekLast() {
+        AssertIntrinsics.kexNotNull(inner);
         return getLast();
     }
 
     @Override
     public boolean removeFirstOccurrence(Object o) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.remove(o);
     }
 
     @Override
     public boolean removeLastOccurrence(Object o) {
+        AssertIntrinsics.kexNotNull(inner);
         return UnknownIntrinsics.kexUnknownBoolean();
     }
 
@@ -166,46 +182,55 @@ public class LinkedList<E>
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.addAll(c);
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.addAll(index, c);
     }
 
     @Override
     public void clear() {
+        AssertIntrinsics.kexNotNull(inner);
         inner.clear();
     }
 
     @Override
     public E get(int index) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.get(index);
     }
 
     @Override
     public E set(int index, E element) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.set(index, element);
     }
 
     @Override
     public void add(int index, E element) {
+        AssertIntrinsics.kexNotNull(inner);
         inner.add(index, element);
     }
 
     @Override
     public E remove(int index) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.remove(index);
     }
 
     @Override
     public int indexOf(Object o) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.indexOf(o);
     }
 
     @Override
     public int lastIndexOf(Object o) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.indexOf(o);
     }
 
@@ -216,21 +241,25 @@ public class LinkedList<E>
 
     @Override
     public int size() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.size();
     }
 
     @Override
     public Iterator<E> descendingIterator() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.listIterator();
     }
 
     @Override
     public ListIterator<E> listIterator(int i) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.listIterator(i);
     }
 
     @Override
     public Object clone() {
+        AssertIntrinsics.kexNotNull(inner);
         LinkedList<E> v = new LinkedList<>();
         v.inner = (ArrayList<E>) inner.clone();
         return v;
@@ -238,26 +267,31 @@ public class LinkedList<E>
 
     @Override
     public Object[] toArray() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.toArray();
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.toArray(a);
     }
 
     @Override
     public Spliterator<E> spliterator() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.spliterator();
     }
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.subList(fromIndex, toIndex);
     }
 
     @Override
     public void forEach(Consumer<? super E> action) {
+        AssertIntrinsics.kexNotNull(inner);
         inner.forEach(action);
     }
 }

@@ -34,6 +34,7 @@
 
 package kex.java.util;
 
+import org.jetbrains.research.kex.intrinsics.AssertIntrinsics;
 import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
 
 import java.io.Serializable;
@@ -60,11 +61,13 @@ public class ArrayDeque<E>
 
     @Override
     public void addFirst(E e) {
+        AssertIntrinsics.kexNotNull(inner);
         inner.add(0, e);
     }
 
     @Override
     public void addLast(E e) {
+        AssertIntrinsics.kexNotNull(inner);
         inner.add(e);
     }
 
@@ -82,11 +85,13 @@ public class ArrayDeque<E>
 
     @Override
     public E removeFirst() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.remove(0);
     }
 
     @Override
     public E removeLast() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.remove(inner.size() - 1);
     }
 
@@ -102,11 +107,13 @@ public class ArrayDeque<E>
 
     @Override
     public E getFirst() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.get(0);
     }
 
     @Override
     public E getLast() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.get(inner.size() - 1);
     }
 
@@ -122,6 +129,7 @@ public class ArrayDeque<E>
 
     @Override
     public boolean removeFirstOccurrence(Object o) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.remove(o);
     }
 
@@ -132,6 +140,7 @@ public class ArrayDeque<E>
 
     @Override
     public boolean add(E e) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.add(e);
     }
 
@@ -172,26 +181,31 @@ public class ArrayDeque<E>
 
     @Override
     public int size() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.size();
     }
 
     @Override
     public boolean isEmpty() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.isEmpty();
     }
 
     @Override
     public Iterator<E> iterator() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.iterator();
     }
 
     @Override
     public Iterator<E> descendingIterator() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.iterator();
     }
 
     @Override
     public boolean contains(Object o) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.contains(o);
     }
 
@@ -202,21 +216,25 @@ public class ArrayDeque<E>
 
     @Override
     public void clear() {
+        AssertIntrinsics.kexNotNull(inner);
         inner.clear();
     }
 
     @Override
     public Object[] toArray() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.toArray();
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.toArray(a);
     }
 
     @Override
     public ArrayDeque<E> clone() {
+        AssertIntrinsics.kexNotNull(inner);
         ArrayDeque<E> v = new ArrayDeque<>();
         v.inner = (ArrayList<E>) inner.clone();
         return v;
@@ -224,6 +242,7 @@ public class ArrayDeque<E>
 
     @Override
     public Spliterator<E> spliterator() {
+        AssertIntrinsics.kexNotNull(inner);
         return inner.spliterator();
     }
 }
