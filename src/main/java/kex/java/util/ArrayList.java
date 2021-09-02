@@ -36,6 +36,7 @@ import java.util.function.Consumer;
 public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess, Cloneable, java.io.Serializable {
     private static final int DEFAULT_CAPACITY = 10;
     private static final Object[] EMPTY_ELEMENTDATA = {};
+    private static final Object[] DEFAULT_CAPACITY_EMPTY_ELEMENTDATA = {};
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     Object[] elementData;
