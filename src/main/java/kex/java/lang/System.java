@@ -42,10 +42,8 @@ import java.util.Properties;
  * variables; a means of loading files and libraries; and a utility
  * method for quickly copying a portion of an array.
  * <p>
- * This implementation is based on Kex Intrinsics library
  *
  * @author unascribed
- * @author Azat Abdullin
  * @since JDK1.0
  */
 public final class System {

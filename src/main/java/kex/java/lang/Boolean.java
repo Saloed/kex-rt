@@ -41,10 +41,7 @@ import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
  * constants and methods useful when dealing with a
  * {@code boolean}.
  *
- * This implementation is based on Kex Intrinsics library
- *
  * @author  Arthur van Hoff
- * @author Azat Abdullin
  * @since   JDK1.0
  */
 public class Boolean implements java.io.Serializable, Comparable<Boolean> {

@@ -38,11 +38,8 @@ import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
  * dealing with a {@code short}.
  * <p>
  *
- * This implementation is based on Kex Intrinsics library
- *
  * @author Nakul Saraiya
  * @author Joseph D. Darcy
- * @author Azat Abdullin
  * @see java.lang.Number
  * @since JDK1.1
  */

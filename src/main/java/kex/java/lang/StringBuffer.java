@@ -89,10 +89,7 @@ import java.util.Arrays;
  * this one, as it supports all of the same operations but it is faster, as
  * it performs no synchronization.
  *
- * This implementation is based on Kex Intrinsics library
- *
  * @author      Arthur van Hoff
- * @author Azat Abdullin
  * @see     java.lang.StringBuilder
  * @see     java.lang.String
  * @since   JDK1.0

@@ -38,11 +38,8 @@ import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
  * byte}, as well as other constants and methods useful when dealing
  * with a {@code byte}.
  *
- * This implementation is based on Kex Intrinsics library
- *
  * @author  Nakul Saraiya
  * @author  Joseph D. Darcy
- * @author Azat Abdullin
  * @see     java.lang.Number
  * @since   JDK1.1
  */

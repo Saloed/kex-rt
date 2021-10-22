@@ -70,10 +70,7 @@ import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
  * or method in this class will cause a {@link NullPointerException} to be
  * thrown.
  *
- * This implementation is based on Kex Intrinsics library
- *
  * @author      Michael McCloskey
- * @author Azat Abdullin
  * @see         java.lang.StringBuffer
  * @see         java.lang.String
  * @since       1.5
