@@ -55,6 +55,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         super();
         int actualCapacity = UnknownIntrinsics.kexUnknownInt();
         this.elementData = new Object[actualCapacity];
+        this.size = 0;
     }
 
     public ArrayList(Collection<? extends E> c) {
@@ -72,6 +73,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     private void ensureCapacityInternal(int minCapacity) {
         AssertIntrinsics.kexAssume(elementData.length > minCapacity);
+        AssertIntrinsics.kexAssume(size < elementData.length);
     }
 
     @Override
@@ -86,7 +88,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     @Override
     public boolean contains(Object o) {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         return CollectionIntrinsics.contains(elementData, o);
     }
 
@@ -96,7 +98,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         if (CollectionIntrinsics.contains(elementData, o)) {
             int result = UnknownIntrinsics.kexUnknownInt();
             AssertIntrinsics.kexAssume(result >= 0);
-            AssertIntrinsics.kexAssume(result < elementData.length);
+            AssertIntrinsics.kexAssume(result < size);
             return result;
         }
         return -1;
@@ -104,7 +106,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     @Override
     public int lastIndexOf(Object o) {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         if (CollectionIntrinsics.contains(elementData, o)) {
             int result = UnknownIntrinsics.kexUnknownInt();
             AssertIntrinsics.kexAssume(result >= 0);
@@ -117,7 +119,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     @Override
     public Object clone() {
         ArrayList<?> v = new ArrayList<>();
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         v.elementData = Arrays.copyOf(elementData, size);
         v.modCount = 0;
         return v;
@@ -125,14 +127,14 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     @Override
     public Object[] toArray() {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         return Arrays.copyOf(elementData, size);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T> T[] toArray(T[] a) {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         return (T[]) Arrays.copyOf(elementData, size, a.getClass());
     }
 
@@ -149,7 +151,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     @SuppressWarnings("unchecked")
     @Override
     public E get(int index) {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         rangeCheck(index);
         return (E) elementData[index];
     }
@@ -157,7 +159,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     @SuppressWarnings("unchecked")
     @Override
     public E set(int index, E element) {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         rangeCheck(index);
 
         E oldValue = (E) elementData[index];
@@ -167,7 +169,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     @Override
     public boolean add(E e) {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         ensureCapacityInternal(size + 1);
         elementData[size++] = e;
         return true;
@@ -175,7 +177,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     @Override
     public void add(int index, E element) {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         rangeCheckForAdd(index);
         ensureCapacityInternal(size + 1);
         elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> {
@@ -188,7 +190,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     @Override
     public E remove(int index) {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         rangeCheck(index);
 
         E oldValue = (E) elementData[index];
@@ -215,14 +217,14 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     @Override
     public void clear() {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> null);
         size = 0;
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         Object[] a = c.toArray();
         int numNew = a.length;
         ensureCapacityInternal(size + numNew);
@@ -236,7 +238,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         rangeCheckForAdd(index);
 
         Object[] a = c.toArray();
@@ -255,7 +257,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     }
 
     protected void removeRange(int fromIndex, int toIndex) {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
         int numMoved = toIndex - fromIndex;
         elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> {
             if (i < fromIndex) return elementData[i];
@@ -322,7 +324,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
             int i = cursor;
             if (i >= size)
                 throw new NoSuchElementException();
-            AssertIntrinsics.kexNotNull(elementData != null);
+            AssertIntrinsics.kexNotNull(elementData);
             Object[] elementData = ArrayList.this.elementData;
             cursor = i + 1;
             return (E) elementData[lastRet = i];
@@ -366,7 +368,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
             int i = cursor - 1;
             if (i < 0)
                 throw new NoSuchElementException();
-            AssertIntrinsics.kexNotNull(elementData != null);
+            AssertIntrinsics.kexNotNull(elementData);
             Object[] elementData = ArrayList.this.elementData;
             cursor = i;
             return (E) elementData[lastRet = i];
