@@ -33,14 +33,86 @@ import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * Resizable-array implementation of the <tt>List</tt> interface.  Implements
+ * all optional list operations, and permits all elements, including
+ * <tt>null</tt>.  In addition to implementing the <tt>List</tt> interface,
+ * this class provides methods to manipulate the size of the array that is
+ * used internally to store the list.  (This class is roughly equivalent to
+ * <tt>Vector</tt>, except that it is unsynchronized.)
+ *
+ * <p>The <tt>size</tt>, <tt>isEmpty</tt>, <tt>get</tt>, <tt>set</tt>,
+ * <tt>iterator</tt>, and <tt>listIterator</tt> operations run in constant
+ * time.  The <tt>add</tt> operation runs in <i>amortized constant time</i>,
+ * that is, adding n elements requires O(n) time.  All of the other operations
+ * run in linear time (roughly speaking).  The constant factor is low compared
+ * to that for the <tt>LinkedList</tt> implementation.
+ *
+ * <p>Each <tt>ArrayList</tt> instance has a <i>capacity</i>.  The capacity is
+ * the size of the array used to store the elements in the list.  It is always
+ * at least as large as the list size.  As elements are added to an ArrayList,
+ * its capacity grows automatically.  The details of the growth policy are not
+ * specified beyond the fact that adding an element has constant amortized
+ * time cost.
+ *
+ * <p>An application can increase the capacity of an <tt>ArrayList</tt> instance
+ * before adding a large number of elements using the <tt>ensureCapacity</tt>
+ * operation.  This may reduce the amount of incremental reallocation.
+ *
+ * <p><strong>Note that this implementation is not synchronized.</strong>
+ * If multiple threads access an <tt>ArrayList</tt> instance concurrently,
+ * and at least one of the threads modifies the list structurally, it
+ * <i>must</i> be synchronized externally.  (A structural modification is
+ * any operation that adds or deletes one or more elements, or explicitly
+ * resizes the backing array; merely setting the value of an element is not
+ * a structural modification.)  This is typically accomplished by
+ * synchronizing on some object that naturally encapsulates the list.
+ *
+ * If no such object exists, the list should be "wrapped" using the
+ * {@link Collections#synchronizedList Collections.synchronizedList}
+ * method.  This is best done at creation time, to prevent accidental
+ * unsynchronized access to the list:<pre>
+ *   List list = Collections.synchronizedList(new ArrayList(...));</pre>
+ *
+ * <p><a name="fail-fast">
+ * The iterators returned by this class's {@link #iterator() iterator} and
+ * {@link #listIterator(int) listIterator} methods are <em>fail-fast</em>:</a>
+ * if the list is structurally modified at any time after the iterator is
+ * created, in any way except through the iterator's own
+ * {@link ListIterator#remove() remove} or
+ * {@link ListIterator#add(Object) add} methods, the iterator will throw a
+ * {@link ConcurrentModificationException}.  Thus, in the face of
+ * concurrent modification, the iterator fails quickly and cleanly, rather
+ * than risking arbitrary, non-deterministic behavior at an undetermined
+ * time in the future.
+ *
+ * <p>Note that the fail-fast behavior of an iterator cannot be guaranteed
+ * as it is, generally speaking, impossible to make any hard guarantees in the
+ * presence of unsynchronized concurrent modification.  Fail-fast iterators
+ * throw {@code ConcurrentModificationException} on a best-effort basis.
+ * Therefore, it would be wrong to write a program that depended on this
+ * exception for its correctness:  <i>the fail-fast behavior of iterators
+ * should be used only to detect bugs.</i>
+ *
+ * <p>This class is a member of the
+ * <a href="{@docRoot}/../technotes/guides/collections/index.html">
+ * Java Collections Framework</a>.
+ *
+ * @author  Josh Bloch
+ * @author  Neal Gafter
+ * @see     Collection
+ * @see     List
+ * @see     LinkedList
+ * @see     Vector
+ * @since   1.2
+ */
 public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess, Cloneable, java.io.Serializable {
     private static final int DEFAULT_CAPACITY = 10;
     private static final Object[] EMPTY_ELEMENTDATA = {};
-    private static final Object[] DEFAULT_CAPACITY_EMPTY_ELEMENTDATA = {};
+    private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     Object[] elementData;
-    private int size;
 
     public ArrayList(int initialCapacity) {
         super();
@@ -55,12 +127,10 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         super();
         int actualCapacity = UnknownIntrinsics.kexUnknownInt();
         this.elementData = new Object[actualCapacity];
-        this.size = 0;
     }
 
     public ArrayList(Collection<? extends E> c) {
         elementData = c.toArray();
-        size = elementData.length;
     }
 
     public void trimToSize() {
@@ -73,17 +143,16 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     private void ensureCapacityInternal(int minCapacity) {
         AssertIntrinsics.kexAssume(elementData.length > minCapacity);
-        AssertIntrinsics.kexAssume(size < elementData.length);
     }
 
     @Override
     public int size() {
-        return size;
+        return elementData.length;
     }
 
     @Override
     public boolean isEmpty() {
-        return size == 0;
+        return elementData.length == 0;
     }
 
     @Override
@@ -98,7 +167,12 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         if (CollectionIntrinsics.contains(elementData, o)) {
             int result = UnknownIntrinsics.kexUnknownInt();
             AssertIntrinsics.kexAssume(result >= 0);
-            AssertIntrinsics.kexAssume(result < size);
+            AssertIntrinsics.kexAssume(result < elementData.length);
+            if (o == null) {
+                AssertIntrinsics.kexAssert(elementData[result] == null);
+            } else {
+                AssertIntrinsics.kexAssert(o.equals(elementData[result]));
+            }
             return result;
         }
         return -1;
@@ -111,6 +185,11 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
             int result = UnknownIntrinsics.kexUnknownInt();
             AssertIntrinsics.kexAssume(result >= 0);
             AssertIntrinsics.kexAssume(result < elementData.length);
+            if (o == null) {
+                AssertIntrinsics.kexAssert(elementData[result] == null);
+            } else {
+                AssertIntrinsics.kexAssert(o.equals(elementData[result]));
+            }
             return result;
         }
         return -1;
@@ -120,7 +199,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     public Object clone() {
         ArrayList<?> v = new ArrayList<>();
         AssertIntrinsics.kexNotNull(elementData);
-        v.elementData = Arrays.copyOf(elementData, size);
+        v.elementData = Arrays.copyOf(elementData, elementData.length);
         v.modCount = 0;
         return v;
     }
@@ -128,24 +207,23 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     @Override
     public Object[] toArray() {
         AssertIntrinsics.kexNotNull(elementData);
-        return Arrays.copyOf(elementData, size);
+        return Arrays.copyOf(elementData, elementData.length);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T> T[] toArray(T[] a) {
         AssertIntrinsics.kexNotNull(elementData);
-        return (T[]) Arrays.copyOf(elementData, size, a.getClass());
+        return (T[]) Arrays.copyOf(elementData, elementData.length, a.getClass());
     }
 
     private void rangeCheck(int index) {
-        if (index >= size)
-            throw new IndexOutOfBoundsException("" + index);
+        AssertIntrinsics.kexAssume(index < elementData.length);
     }
 
     private void rangeCheckForAdd(int index) {
-        if (index > size || index < 0)
-            throw new IndexOutOfBoundsException("" + index);
+        AssertIntrinsics.kexAssume(index >= 0);
+        AssertIntrinsics.kexAssume(index < elementData.length);
     }
 
     @SuppressWarnings("unchecked")
@@ -170,22 +248,25 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     @Override
     public boolean add(E e) {
         AssertIntrinsics.kexNotNull(elementData);
-        ensureCapacityInternal(size + 1);
-        elementData[size++] = e;
+        int oldLength = elementData.length;
+        elementData = CollectionIntrinsics.generateObjectArray(oldLength + 1, index -> {
+            if (index < oldLength) return elementData[index];
+            else return null;
+        });
+        elementData[oldLength] = e;
         return true;
     }
 
     @Override
     public void add(int index, E element) {
         AssertIntrinsics.kexNotNull(elementData);
-        rangeCheckForAdd(index);
-        ensureCapacityInternal(size + 1);
-        elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> {
+        int oldLength = elementData.length;
+        elementData = CollectionIntrinsics.generateObjectArray(oldLength + 1, i -> {
             if (i < index) return elementData[i];
-            return elementData[i + 1];
+            else if (i == index) return null;
+            else return elementData[i - 1];
         });
         elementData[index] = element;
-        size++;
     }
 
     @Override
@@ -195,13 +276,12 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
         E oldValue = (E) elementData[index];
 
-        int numMoved = size - index - 1;
+        int numMoved = elementData.length - index - 1;
         if (numMoved > 0)
-            elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> {
+            elementData = CollectionIntrinsics.generateObjectArray(elementData.length - 1, i -> {
                 if (i < index) return elementData[i];
-                return elementData[i - 1];
+                else return elementData[i - 1];
             });
-        elementData[--size] = null;
         return oldValue;
     }
 
@@ -218,8 +298,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     @Override
     public void clear() {
         AssertIntrinsics.kexNotNull(elementData);
-        elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> null);
-        size = 0;
+        elementData = new Object[0];
     }
 
     @Override
@@ -227,12 +306,11 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         AssertIntrinsics.kexNotNull(elementData);
         Object[] a = c.toArray();
         int numNew = a.length;
-        ensureCapacityInternal(size + numNew);
-        elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> {
-            if (i < size) return elementData[i];
-            return a[i - size];
+        int oldSize = elementData.length;
+        elementData = CollectionIntrinsics.generateObjectArray(oldSize + numNew, i -> {
+            if (i < oldSize) return elementData[i];
+            return a[i - oldSize];
         });
-        size += numNew;
         return numNew != 0;
     }
 
@@ -243,29 +321,26 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
         Object[] a = c.toArray();
         int numNew = a.length;
-        ensureCapacityInternal(size + numNew);
+        int oldSize = elementData.length;
 
-        int numMoved = size - index;
-        elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> {
+        int numMoved = oldSize - index;
+        elementData = CollectionIntrinsics.generateObjectArray(oldSize + numNew, i -> {
             if (i < index) return elementData[i];
-            if (i < index + numMoved) return a[i - index];
-            if (i + numMoved < elementData.length) return elementData[i + numMoved];
-            return null;
+            else if (i < index + numMoved) return a[i - index];
+            else if (i + numMoved < elementData.length) return elementData[i + numMoved];
+            else return null;
         });
-        size += numNew;
         return numNew != 0;
     }
 
     protected void removeRange(int fromIndex, int toIndex) {
         AssertIntrinsics.kexNotNull(elementData);
         int numMoved = toIndex - fromIndex;
-        elementData = CollectionIntrinsics.generateObjectArray(elementData.length, i -> {
+        elementData = CollectionIntrinsics.generateObjectArray(elementData.length - numMoved, i -> {
             if (i < fromIndex) return elementData[i];
-            if (i + numMoved < elementData.length) return elementData[i + numMoved];
-            return null;
+            else if (i + numMoved < elementData.length) return elementData[i + numMoved];
+            else return null;
         });
-
-        size = size - (toIndex - fromIndex);
     }
 
     @Override
@@ -294,7 +369,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     @Override
     public ListIterator<E> listIterator(int index) {
-        if (index < 0 || index > size)
+        if (index < 0 || index > elementData.length)
             throw new IndexOutOfBoundsException("Index: " + index);
         return new ArrayList.ListItr(index);
     }
@@ -315,16 +390,17 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
         @Override
         public boolean hasNext() {
-            return cursor != size;
+            return cursor != elementData.length;
         }
 
         @SuppressWarnings("unchecked")
         @Override
         public E next() {
             int i = cursor;
-            if (i >= size)
-                throw new NoSuchElementException();
             AssertIntrinsics.kexNotNull(elementData);
+            if (i >= elementData.length) {
+                throw new NoSuchElementException();
+            }
             Object[] elementData = ArrayList.this.elementData;
             cursor = i + 1;
             return (E) elementData[lastRet = i];

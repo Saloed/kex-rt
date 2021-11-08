@@ -41,12 +41,10 @@ import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
  * or method in this class will cause a {@link NullPointerException} to be
  * thrown.
  * <p>
- * This implementation is based on Kex Intrinsics library
  *
  * @author Michael McCloskey
  * @author Martin Buchholz
  * @author Ulf Zibis
- * @author Azat Abdullin
  * @since 1.5
  */
 public abstract class AbstractStringBuilder implements Appendable, CharSequence {

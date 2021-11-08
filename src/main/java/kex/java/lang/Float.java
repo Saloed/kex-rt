@@ -41,12 +41,9 @@ import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
  * constants and methods useful when dealing with a
  * {@code float}.
  *
- * This implementation is based on Kex Intrinsics library
- *
  * @author  Lee Boynton
  * @author  Arthur van Hoff
  * @author  Joseph D. Darcy
- * @author Azat Abdullin
  * @since JDK1.0
  */
 public final class Float extends Number implements Comparable<Float> {

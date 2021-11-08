@@ -41,12 +41,9 @@ import kex.sun.misc.DoubleConsts;
  * constants and methods useful when dealing with a
  * {@code double}.
  *
- * This implementation is based on Kex Intrinsics library
- *
  * @author  Lee Boynton
  * @author  Arthur van Hoff
  * @author  Joseph D. Darcy
- * @author Azat Abdullin
  * @since JDK1.0
  */
 public final class Double extends Number implements Comparable<Double> {

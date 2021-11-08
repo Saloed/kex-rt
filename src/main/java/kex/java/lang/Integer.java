@@ -49,13 +49,10 @@ import java.lang.annotation.Native;
  * Delight</i>, (Addison Wesley, 2002).
  * <p>
  *
- * This implementation is based on Kex Intrinsics library
- *
  * @author Lee Boynton
  * @author Arthur van Hoff
  * @author Josh Bloch
  * @author Joseph D. Darcy
- * @author Azat Abdullin
  * @since JDK1.0
  */
 public final class Integer extends Number implements Comparable<Integer> {

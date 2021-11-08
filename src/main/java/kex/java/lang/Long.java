@@ -50,13 +50,10 @@ import java.math.BigInteger;
  * based on material from Henry S. Warren, Jr.'s <i>Hacker's
  * Delight</i>, (Addison Wesley, 2002).
  *
- * This implementation is based on Kex Intrinsics library
- *
  * @author  Lee Boynton
  * @author  Arthur van Hoff
  * @author  Josh Bloch
  * @author  Joseph D. Darcy
- * @author Azat Abdullin
  * @since   JDK1.0
  */
 public final class Long extends Number implements Comparable<Long> {

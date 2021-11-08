@@ -37,7 +37,31 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.function.*;
 import java.util.stream.*;
 
-// todo: contracts for: fill, setAll
+/**
+ * This class contains various methods for manipulating arrays (such as
+ * sorting and searching). This class also contains a static factory
+ * that allows arrays to be viewed as lists.
+ *
+ * <p>The methods in this class all throw a {@code NullPointerException},
+ * if the specified array reference is null, except where noted.
+ *
+ * <p>The documentation for the methods contained in this class includes
+ * briefs description of the <i>implementations</i>. Such descriptions should
+ * be regarded as <i>implementation notes</i>, rather than parts of the
+ * <i>specification</i>. Implementors should feel free to substitute other
+ * algorithms, so long as the specification itself is adhered to. (For
+ * example, the algorithm used by {@code sort(Object[])} does not have to be
+ * a MergeSort, but it does have to be <i>stable</i>.)
+ *
+ * <p>This class is a member of the
+ * <a href="{@docRoot}/../technotes/guides/collections/index.html">
+ * Java Collections Framework</a>.
+ *
+ * @author Josh Bloch
+ * @author Neal Gafter
+ * @author John Rose
+ * @since  1.2
+ */
 public class Arrays {
     private static final int MIN_ARRAY_SORT_GRAN = 1 << 13;
 
