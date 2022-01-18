@@ -343,4 +343,60 @@ public class LinkedList<E>
         AssertIntrinsics.kexNotNull(inner);
         inner.forEach(action);
     }
+
+    private class ListItr implements ListIterator<E> {
+        private ListIterator<E> itr;
+
+        ListItr(int index) {
+            super();
+            itr = inner.listIterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return itr.hasNext();
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public E next() {
+            return itr.next();
+        }
+
+        @Override
+        public void remove() {
+            itr.remove();
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return itr.hasPrevious();
+        }
+
+        @Override
+        public int nextIndex() {
+            return itr.nextIndex();
+        }
+
+        @Override
+        public int previousIndex() {
+            return itr.previousIndex();
+        }
+
+        @Override
+        public E previous() {
+            return itr.previous();
+        }
+
+        @Override
+        public void set(E e) {
+            itr.set(e);
+        }
+
+        @Override
+        public void add(E e) {
+            itr.add(e);
+        }
+    }
+
 }
