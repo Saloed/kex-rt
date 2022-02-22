@@ -113,6 +113,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     Object[] elementData;
+    private int size;
 
     public ArrayList(int initialCapacity) {
         super();
@@ -121,16 +122,19 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         int actualCapacity = UnknownIntrinsics.kexUnknownInt();
         AssertIntrinsics.kexAssume(actualCapacity > initialCapacity);
         this.elementData = new Object[actualCapacity];
+        this.size = actualCapacity;
     }
 
     public ArrayList() {
         super();
         int actualCapacity = UnknownIntrinsics.kexUnknownInt();
         this.elementData = new Object[actualCapacity];
+        this.size = actualCapacity;
     }
 
     public ArrayList(Collection<? extends E> c) {
         elementData = c.toArray();
+        this.size = elementData.length;
     }
 
     public void trimToSize() {
@@ -147,23 +151,29 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     @Override
     public int size() {
-        return elementData.length;
+        AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return elementData.length == 0;
+        AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
+        return size == 0;
     }
 
     @Override
     public boolean contains(Object o) {
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         return CollectionIntrinsics.contains(elementData, o);
     }
 
     @Override
     public int indexOf(Object o) {
-        AssertIntrinsics.kexNotNull(elementData != null);
+        AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         if (CollectionIntrinsics.contains(elementData, o)) {
             int result = UnknownIntrinsics.kexUnknownInt();
             AssertIntrinsics.kexAssume(result >= 0);
@@ -181,6 +191,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     @Override
     public int lastIndexOf(Object o) {
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         if (CollectionIntrinsics.contains(elementData, o)) {
             int result = UnknownIntrinsics.kexUnknownInt();
             AssertIntrinsics.kexAssume(result >= 0);
@@ -199,14 +210,17 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     public Object clone() {
         ArrayList<?> v = new ArrayList<>();
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         v.elementData = Arrays.copyOf(elementData, elementData.length);
         v.modCount = 0;
+        v.size = size;
         return v;
     }
 
     @Override
     public Object[] toArray() {
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         return Arrays.copyOf(elementData, elementData.length);
     }
 
@@ -214,6 +228,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     @Override
     public <T> T[] toArray(T[] a) {
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         return (T[]) Arrays.copyOf(elementData, elementData.length, a.getClass());
     }
 
@@ -230,6 +245,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     @Override
     public E get(int index) {
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         rangeCheck(index);
         return (E) elementData[index];
     }
@@ -238,6 +254,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     @Override
     public E set(int index, E element) {
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         rangeCheck(index);
 
         E oldValue = (E) elementData[index];
@@ -248,18 +265,21 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     @Override
     public boolean add(E e) {
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         int oldLength = elementData.length;
         elementData = CollectionIntrinsics.generateObjectArray(oldLength + 1, index -> {
             if (index < oldLength) return elementData[index];
             else return null;
         });
         elementData[oldLength] = e;
+        size = elementData.length;
         return true;
     }
 
     @Override
     public void add(int index, E element) {
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         int oldLength = elementData.length;
         elementData = CollectionIntrinsics.generateObjectArray(oldLength + 1, i -> {
             if (i < index) return elementData[i];
@@ -267,11 +287,13 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
             else return elementData[i - 1];
         });
         elementData[index] = element;
+        size = elementData.length;
     }
 
     @Override
     public E remove(int index) {
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         rangeCheck(index);
 
         E oldValue = (E) elementData[index];
@@ -282,6 +304,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
                 if (i < index) return elementData[i];
                 else return elementData[i - 1];
             });
+        size = elementData.length;
         return oldValue;
     }
 
@@ -298,12 +321,15 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     @Override
     public void clear() {
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         elementData = new Object[0];
+        size = 0;
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         Object[] a = c.toArray();
         int numNew = a.length;
         int oldSize = elementData.length;
@@ -311,12 +337,14 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
             if (i < oldSize) return elementData[i];
             return a[i - oldSize];
         });
+        size = elementData.length;
         return numNew != 0;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         rangeCheckForAdd(index);
 
         Object[] a = c.toArray();
@@ -330,17 +358,20 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
             else if (i + numMoved < elementData.length) return elementData[i + numMoved];
             else return null;
         });
+        size = elementData.length;
         return numNew != 0;
     }
 
     protected void removeRange(int fromIndex, int toIndex) {
         AssertIntrinsics.kexNotNull(elementData);
+        AssertIntrinsics.kexAssume(size == elementData.length);
         int numMoved = toIndex - fromIndex;
         elementData = CollectionIntrinsics.generateObjectArray(elementData.length - numMoved, i -> {
             if (i < fromIndex) return elementData[i];
             else if (i + numMoved < elementData.length) return elementData[i + numMoved];
             else return null;
         });
+        size = elementData.length;
     }
 
     @Override
@@ -390,7 +421,8 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
         @Override
         public boolean hasNext() {
-            return cursor != elementData.length;
+            AssertIntrinsics.kexAssume(size == elementData.length);
+            return cursor != size;
         }
 
         @SuppressWarnings("unchecked")
@@ -398,7 +430,8 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         public E next() {
             int i = cursor;
             AssertIntrinsics.kexNotNull(elementData);
-            if (i >= elementData.length) {
+            AssertIntrinsics.kexAssume(size == elementData.length);
+            if (i >= size) {
                 throw new NoSuchElementException();
             }
             Object[] elementData = ArrayList.this.elementData;
@@ -445,6 +478,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
             if (i < 0)
                 throw new NoSuchElementException();
             AssertIntrinsics.kexNotNull(elementData);
+            AssertIntrinsics.kexAssume(size == elementData.length);
             Object[] elementData = ArrayList.this.elementData;
             cursor = i;
             return (E) elementData[lastRet = i];
