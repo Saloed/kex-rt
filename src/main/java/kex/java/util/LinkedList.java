@@ -307,6 +307,18 @@ public class LinkedList<E>
     }
 
     @Override
+    public ListIterator<E> listIterator() {
+        AssertIntrinsics.kexNotNull(inner);
+        return inner.listIterator();
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        AssertIntrinsics.kexNotNull(inner);
+        return inner.iterator();
+    }
+
+    @Override
     public Object clone() {
         AssertIntrinsics.kexNotNull(inner);
         LinkedList<E> v = new LinkedList<>();
