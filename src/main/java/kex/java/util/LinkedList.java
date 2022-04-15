@@ -297,25 +297,25 @@ public class LinkedList<E>
     @Override
     public Iterator<E> descendingIterator() {
         AssertIntrinsics.kexNotNull(inner);
-        return inner.listIterator();
+        return new ListItr(0);
     }
 
     @Override
     public ListIterator<E> listIterator(int i) {
         AssertIntrinsics.kexNotNull(inner);
-        return inner.listIterator(i);
+        return new ListItr(i);
     }
 
     @Override
     public ListIterator<E> listIterator() {
         AssertIntrinsics.kexNotNull(inner);
-        return inner.listIterator();
+        return new ListItr(0);
     }
 
     @Override
     public Iterator<E> iterator() {
         AssertIntrinsics.kexNotNull(inner);
-        return inner.iterator();
+        return new ListItr(0);
     }
 
     @Override
@@ -357,57 +357,55 @@ public class LinkedList<E>
     }
 
     private class ListItr implements ListIterator<E> {
-        private ListIterator<E> itr;
-
+        ArrayList<E>.ListItr listItr;
         ListItr(int index) {
-            super();
-            itr = inner.listIterator();
+            listItr = (ArrayList<E>.ListItr) inner.listIterator(index);
         }
 
         @Override
         public boolean hasNext() {
-            return itr.hasNext();
+            return listItr.hasNext();
         }
 
         @SuppressWarnings("unchecked")
         @Override
         public E next() {
-            return itr.next();
+            return listItr.next();
         }
 
         @Override
         public void remove() {
-            itr.remove();
+            listItr.remove();
         }
 
         @Override
         public boolean hasPrevious() {
-            return itr.hasPrevious();
+            return listItr.hasPrevious();
         }
 
         @Override
         public int nextIndex() {
-            return itr.nextIndex();
+            return listItr.nextIndex();
         }
 
         @Override
         public int previousIndex() {
-            return itr.previousIndex();
+            return listItr.previousIndex();
         }
 
         @Override
         public E previous() {
-            return itr.previous();
+            return listItr.previous();
         }
 
         @Override
         public void set(E e) {
-            itr.set(e);
+            listItr.set(e);
         }
 
         @Override
         public void add(E e) {
-            itr.add(e);
+            listItr.add(e);
         }
     }
 

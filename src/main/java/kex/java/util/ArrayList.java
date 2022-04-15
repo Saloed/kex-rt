@@ -386,12 +386,13 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         return new ArrayList.Itr();
     }
 
-    private class Itr implements Iterator<E> {
+    class Itr implements Iterator<E> {
         int cursor = 0;
         int lastRet = -1;
 
         @Override
         public boolean hasNext() {
+            AssertIntrinsics.kexNotNull(elementData);
             return cursor < elementData.length;
         }
 
@@ -407,6 +408,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
         @Override
         public void remove() {
+            AssertIntrinsics.kexNotNull(elementData);
             if (lastRet < 0)
                 throw new IllegalStateException();
 
@@ -416,7 +418,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         }
     }
 
-    private class ListItr extends ArrayList<E>.Itr implements ListIterator<E> {
+    class ListItr extends ArrayList<E>.Itr implements ListIterator<E> {
         ListItr(int index) {
             super();
             cursor = index;
@@ -424,16 +426,19 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
         @Override
         public boolean hasPrevious() {
+            AssertIntrinsics.kexNotNull(elementData);
             return cursor != 0;
         }
 
         @Override
         public int nextIndex() {
+            AssertIntrinsics.kexNotNull(elementData);
             return cursor;
         }
 
         @Override
         public int previousIndex() {
+            AssertIntrinsics.kexNotNull(elementData);
             return cursor - 1;
         }
 
@@ -451,12 +456,14 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
         @Override
         public void set(E e) {
+            AssertIntrinsics.kexNotNull(elementData);
             if (lastRet < 0) throw new IllegalStateException();
             ArrayList.this.set(lastRet, e);
         }
 
         @Override
         public void add(E e) {
+            AssertIntrinsics.kexNotNull(elementData);
             int i = cursor;
             ArrayList.this.add(i, e);
             cursor = i + 1;
