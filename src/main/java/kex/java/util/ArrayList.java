@@ -294,7 +294,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 //                fastRemove(index);
 //            }
 //        });
-        return true;
+        return contains(o);
     }
 
     @Override
