@@ -25,8 +25,8 @@
 
 package kex.java.util;
 
-import org.jetbrains.research.kex.intrinsics.AssertIntrinsics;
-import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
+import org.vorpal.research.kex.intrinsics.AssertIntrinsics;
+import org.vorpal.research.kex.intrinsics.UnknownIntrinsics;
 
 import java.util.*;
 import java.util.function.Consumer;

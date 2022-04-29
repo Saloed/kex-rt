@@ -25,7 +25,7 @@
 
 package kex.java.lang;
 
-import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
+import org.vorpal.research.kex.intrinsics.ObjectIntrinsics;
 
 
 /**

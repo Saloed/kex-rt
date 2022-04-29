@@ -25,8 +25,8 @@
 
 package kex.java.lang;
 
-import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
-import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
+import org.vorpal.research.kex.intrinsics.ObjectIntrinsics;
+import org.vorpal.research.kex.intrinsics.UnknownIntrinsics;
 import kex.sun.misc.DoubleConsts;
 
 /**

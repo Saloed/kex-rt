@@ -25,10 +25,10 @@
 
 package kex.java.util;
 
-import org.jetbrains.research.kex.intrinsics.AssertIntrinsics;
-import org.jetbrains.research.kex.intrinsics.CollectionIntrinsics;
-import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
-import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
+import org.vorpal.research.kex.intrinsics.AssertIntrinsics;
+import org.vorpal.research.kex.intrinsics.CollectionIntrinsics;
+import org.vorpal.research.kex.intrinsics.ObjectIntrinsics;
+import org.vorpal.research.kex.intrinsics.UnknownIntrinsics;
 
 import java.lang.reflect.Array;
 import java.util.*;

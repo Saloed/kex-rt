@@ -26,8 +26,8 @@
 package kex.java.lang;
 
 import kex.sun.misc.FloatConsts;
-import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
-import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
+import org.vorpal.research.kex.intrinsics.ObjectIntrinsics;
+import org.vorpal.research.kex.intrinsics.UnknownIntrinsics;
 
 /**
  * The {@code Float} class wraps a value of primitive type

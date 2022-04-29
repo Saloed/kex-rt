@@ -25,10 +25,10 @@
 package kex.java.lang;
 
 import kex.java.util.Arrays;
-import org.jetbrains.research.kex.intrinsics.AssertIntrinsics;
-import org.jetbrains.research.kex.intrinsics.CollectionIntrinsics;
-import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
-import org.jetbrains.research.kex.intrinsics.ObjectIntrinsics;
+import org.vorpal.research.kex.intrinsics.AssertIntrinsics;
+import org.vorpal.research.kex.intrinsics.CollectionIntrinsics;
+import org.vorpal.research.kex.intrinsics.UnknownIntrinsics;
+import org.vorpal.research.kex.intrinsics.ObjectIntrinsics;
 
 /**
  * A mutable sequence of characters.

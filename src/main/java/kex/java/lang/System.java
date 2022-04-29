@@ -25,7 +25,7 @@
 
 package kex.java.lang;
 
-import org.jetbrains.research.kex.intrinsics.UnknownIntrinsics;
+import org.vorpal.research.kex.intrinsics.UnknownIntrinsics;
 
 import java.io.*;
 import java.nio.channels.Channel;
