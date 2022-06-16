@@ -173,6 +173,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
             if (o == null) {
                 AssertIntrinsics.kexAssert(elementData[result] == null);
             } else {
+                AssertIntrinsics.kexAssume(CollectionIntrinsics.forAll(0, result - 1, index -> !o.equals(elementData[index])));
                 AssertIntrinsics.kexAssert(o.equals(elementData[result]));
             }
             return result;
@@ -289,12 +290,16 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     @Override
     public boolean remove(Object o) {
-//        CollectionIntrinsics.forEach(0, size, index -> {
-//            if (ObjectIntrinsics.equals(elementData[index], o)) {
-//                fastRemove(index);
-//            }
-//        });
-        return contains(o);
+        AssertIntrinsics.kexNotNull(elementData);
+
+        if (!contains(o)) return false;
+        int removeIndex = indexOf(o);
+
+        elementData = CollectionIntrinsics.generateObjectArray(elementData.length - 1, i -> {
+            if (i < removeIndex) return elementData[i];
+            else return elementData[i - 1];
+        });
+        return true;
     }
 
     @Override
