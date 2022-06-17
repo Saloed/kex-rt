@@ -516,12 +516,12 @@ public class HashMap<K, V> extends AbstractMap<K, V>
         int cursor = 0;
         int lastRet = -1;
 
-        public final boolean hasNext() {
+        public boolean hasNext() {
             HashMap.this.contracts();
-            return cursor < HashMap.this.size();
+            return cursor < HashMap.this.keys.size();
         }
 
-        public final void remove() {
+        public void remove() {
             HashMap.this.contracts();
             if (lastRet < 0)
                 throw new IllegalStateException();

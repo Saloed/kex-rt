@@ -289,6 +289,20 @@ public class LinkedHashMap<K, V> extends HashMap<K, V> {
     // iterators
 
     abstract class LinkedHashIterator<T> extends HashIterator<T> {
+        public final boolean hasNext() {
+            LinkedHashMap.this.contracts();
+            return cursor < LinkedHashMap.this.keys.size();
+        }
+
+        public final void remove() {
+            LinkedHashMap.this.contracts();
+            if (lastRet < 0)
+                throw new IllegalStateException();
+
+            LinkedHashMap.this.remove(keys.get(lastRet));
+            cursor = lastRet;
+            lastRet = -1;
+        }
     }
 
     final class LinkedKeyIterator extends LinkedHashIterator<K> {
