@@ -30,6 +30,7 @@ import org.vorpal.research.kex.intrinsics.AssertIntrinsics;
 
 import java.util.*;
 
+
 /**
  * This class implements the <tt>Set</tt> interface, backed by a hash table
  * (actually a <tt>HashMap</tt> instance).  It makes no guarantees as to the
@@ -91,85 +92,90 @@ import java.util.*;
 public class HashSet<E>
         extends AbstractSet<E>
         implements Set<E>, Cloneable, java.io.Serializable {
-    ArrayList<E> inner;
+    LinkedHashMap<E, Object> inner;
 
     public HashSet() {
-        inner = new ArrayList<>();
+        inner = new LinkedHashMap<>();
     }
 
     public HashSet(Collection<? extends E> c) {
-        inner = new ArrayList<>();
+        inner = new LinkedHashMap<>();
         addAll(c);
     }
 
     public HashSet(int initialCapacity, float loadFactor) {
-        inner = new ArrayList<>(initialCapacity);
+        inner = new LinkedHashMap<>(initialCapacity, loadFactor);
     }
 
     public HashSet(int initialCapacity) {
-        inner = new ArrayList<>(initialCapacity);
+        inner = new LinkedHashMap<>(initialCapacity);
     }
 
     HashSet(int initialCapacity, float loadFactor, boolean dummy) {
-        inner = new ArrayList<>(initialCapacity);
+        inner = new LinkedHashMap<>(initialCapacity, loadFactor);
+    }
+
+    protected void contracts() {
+        AssertIntrinsics.kexNotNull(inner);
     }
 
     @Override
     public Iterator<E> iterator() {
-        AssertIntrinsics.kexNotNull(inner);
-        return inner.iterator();
+        contracts();
+        return inner.keySet().iterator();
     }
 
     @Override
     public int size() {
-        AssertIntrinsics.kexNotNull(inner);
+        contracts();
         return inner.size();
     }
 
     @Override
     public boolean isEmpty() {
-        AssertIntrinsics.kexNotNull(inner);
+        contracts();
         return inner.isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
-        AssertIntrinsics.kexNotNull(inner);
-        return inner.contains(o);
+        contracts();
+        return inner.containsKey(o);
     }
 
     @Override
     public boolean add(E e) {
-        AssertIntrinsics.kexNotNull(inner);
-        if (!inner.contains(e)) {
-            return inner.add(e);
+        contracts();
+        if (!inner.containsKey(e)) {
+            inner.put(e, new Object());
+            return true;
         }
         return false;
     }
 
     @Override
     public boolean remove(Object o) {
-        AssertIntrinsics.kexNotNull(inner);
-        return inner.remove(o);
+        contracts();
+        return inner.remove(o) != null;
     }
 
     @Override
     public void clear() {
-        AssertIntrinsics.kexNotNull(inner);
+        contracts();
         inner.clear();
     }
 
     @Override
     public Object clone() {
-        AssertIntrinsics.kexNotNull(inner);
+        contracts();
         HashSet<E> v = new HashSet<>();
-        v.inner = (ArrayList<E>) inner.clone();
+        v.inner = (LinkedHashMap<E, Object>) inner.clone();
         return v;
     }
 
     @Override
     public Spliterator<E> spliterator() {
-        AssertIntrinsics.kexNotNull(inner);
-        return inner.spliterator();
+        contracts();
+        return inner.keySet().spliterator();
     }
 }
