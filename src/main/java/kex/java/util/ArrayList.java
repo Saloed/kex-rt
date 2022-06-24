@@ -163,17 +163,21 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         return CollectionIntrinsics.contains(elementData, o);
     }
 
+    private Object tempObject = null;
+
     @Override
     public int indexOf(Object o) {
         AssertIntrinsics.kexNotNull(elementData);
-        if (CollectionIntrinsics.contains(elementData, o)) {
+        tempObject = o;
+        if (CollectionIntrinsics.contains(elementData, tempObject)) {
             int result = UnknownIntrinsics.kexUnknownInt();
             AssertIntrinsics.kexAssume(result >= 0);
             AssertIntrinsics.kexAssume(result < elementData.length);
             if (o == null) {
+                AssertIntrinsics.kexAssume(CollectionIntrinsics.forAll(0, result, index -> elementData[index] != null));
                 AssertIntrinsics.kexAssert(elementData[result] == null);
             } else {
-                AssertIntrinsics.kexAssume(CollectionIntrinsics.forAll(0, result - 1, index -> !o.equals(elementData[index])));
+                AssertIntrinsics.kexAssume(CollectionIntrinsics.forAll(0, result, index -> !tempObject.equals(elementData[index])));
                 AssertIntrinsics.kexAssert(o.equals(elementData[result]));
             }
             return result;
@@ -184,13 +188,16 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     @Override
     public int lastIndexOf(Object o) {
         AssertIntrinsics.kexNotNull(elementData);
-        if (CollectionIntrinsics.contains(elementData, o)) {
+        tempObject = o;
+        if (CollectionIntrinsics.contains(elementData, tempObject)) {
             int result = UnknownIntrinsics.kexUnknownInt();
             AssertIntrinsics.kexAssume(result >= 0);
             AssertIntrinsics.kexAssume(result < elementData.length);
             if (o == null) {
+                AssertIntrinsics.kexAssume(CollectionIntrinsics.forAll(result + 1, elementData.length, index -> elementData[index] != null));
                 AssertIntrinsics.kexAssert(elementData[result] == null);
             } else {
+                AssertIntrinsics.kexAssume(CollectionIntrinsics.forAll(result + 1, elementData.length, index -> !tempObject.equals(elementData[index])));
                 AssertIntrinsics.kexAssert(o.equals(elementData[result]));
             }
             return result;
