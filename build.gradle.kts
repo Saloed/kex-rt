@@ -6,7 +6,7 @@ plugins {
 }
 
 dependencies {
-    implementation("org.jetbrains.research", "kex-intrinsics", `kex-intrinsics-version`)
+    implementation("org.vorpal.research", "kex-intrinsics", `kex-intrinsics-version`)
 }
 
 description = "kex-rt"
