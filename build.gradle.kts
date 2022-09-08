@@ -6,7 +6,7 @@ plugins {
 }
 
 dependencies {
-    implementation("org.vorpal.research", "kex-intrinsics", `kex-intrinsics-version`)
+    implementation(project(":kex-intrinsics"))
 }
 
 description = "kex-rt"
