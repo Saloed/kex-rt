@@ -28,6 +28,7 @@ package kex.java.lang;
 import org.vorpal.research.kex.intrinsics.ObjectIntrinsics;
 import org.vorpal.research.kex.intrinsics.UnknownIntrinsics;
 import kex.sun.misc.DoubleConsts;
+import java.lang.Object;
 
 /**
  * The {@code Double} class wraps a value of the primitive type

@@ -27,6 +27,7 @@ package kex.java.lang;
 
 import org.vorpal.research.kex.intrinsics.ObjectIntrinsics;
 import org.vorpal.research.kex.intrinsics.UnknownIntrinsics;
+import java.lang.Object;
 
 
 /**

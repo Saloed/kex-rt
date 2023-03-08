@@ -30,6 +30,11 @@ import org.vorpal.research.kex.intrinsics.UnknownIntrinsics;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Locale;
+import java.lang.Object;
+import java.lang.Throwable;
+import java.lang.NullPointerException;
+import java.lang.IllegalArgumentException;
+import java.lang.IndexOutOfBoundsException;
 
 /**
  * The {@code Character} class wraps a value of the primitive

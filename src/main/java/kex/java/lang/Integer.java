@@ -31,6 +31,7 @@ import org.vorpal.research.kex.intrinsics.ObjectIntrinsics;
 import org.vorpal.research.kex.intrinsics.UnknownIntrinsics;
 
 import java.lang.annotation.Native;
+import java.lang.Object;
 
 /**
  * The {@code Integer} class wraps a value of the primitive type

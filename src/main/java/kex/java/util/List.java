@@ -17,24 +17,24 @@ abstract class List<E> implements java.util.List<E> {
     }
 
     @Override
-    public int size() {
+    public final int size() {
         AssertIntrinsics.kexNotNull(elementData);
         return elementData.length;
     }
 
     @Override
-    public boolean isEmpty() {
+    public final boolean isEmpty() {
         AssertIntrinsics.kexNotNull(elementData);
         return elementData.length == 0;
     }
 
     @Override
-    public boolean contains(Object o) {
+    public final boolean contains(Object o) {
         return indexOf(o) >= 0;
     }
 
     @Override
-    public boolean add(E e) {
+    public final boolean add(E e) {
         AssertIntrinsics.kexNotNull(elementData);
         int oldLength = elementData.length;
         elementData = CollectionIntrinsics.arrayCopyAndGrow(elementData, 1);
@@ -43,14 +43,14 @@ abstract class List<E> implements java.util.List<E> {
     }
 
     @Override
-    public E get(int index) {
+    public final E get(int index) {
         AssertIntrinsics.kexNotNull(elementData);
         rangeCheck(index);
         return (E) elementData[index];
     }
 
     @Override
-    public E set(int index, E element) {
+    public final E set(int index, E element) {
         AssertIntrinsics.kexNotNull(elementData);
         rangeCheck(index);
         E oldValue = (E) elementData[index];
@@ -59,7 +59,7 @@ abstract class List<E> implements java.util.List<E> {
     }
 
     @Override
-    public void add(int index, E element) {
+    public final void add(int index, E element) {
         AssertIntrinsics.kexNotNull(elementData);
         if (index == elementData.length) {
             add(element);
@@ -70,18 +70,18 @@ abstract class List<E> implements java.util.List<E> {
     }
 
     @Override
-    public void clear() {
+    public final void clear() {
         AssertIntrinsics.kexNotNull(elementData);
         elementData = CollectionIntrinsics.arrayCopyAndTrim(elementData, elementData.length);
     }
 
     @Override
-    public int indexOf(Object o) {
+    public final int indexOf(Object o) {
         return indexOfFrom(0, o);
     }
 
     @Override
-    public int lastIndexOf(Object o) {
+    public final int lastIndexOf(Object o) {
         return indexOfFromReversed(elementData.length - 1, o);
     }
 
@@ -108,7 +108,7 @@ abstract class List<E> implements java.util.List<E> {
     }
 
     @Override
-    public E remove(int index) {
+    public final E remove(int index) {
         AssertIntrinsics.kexNotNull(elementData);
         rangeCheck(index);
 
@@ -124,7 +124,7 @@ abstract class List<E> implements java.util.List<E> {
     }
 
     @Override
-    public boolean remove(Object o) {
+    public final boolean remove(Object o) {
         AssertIntrinsics.kexNotNull(elementData);
         int removeIndex = indexOf(o);
         if (removeIndex == -1) {
@@ -136,7 +136,7 @@ abstract class List<E> implements java.util.List<E> {
     }
 
     @Override
-    public boolean containsAll(@NotNull Collection<?> c) {
+    public final boolean containsAll(@NotNull Collection<?> c) {
         if (c instanceof java.util.List) {
             return containsAllList((java.util.List) c);
         } else {
@@ -145,7 +145,7 @@ abstract class List<E> implements java.util.List<E> {
     }
 
     @Override
-    public boolean addAll(@NotNull Collection<? extends E> c) {
+    public final boolean addAll(@NotNull Collection<? extends E> c) {
         if (c instanceof java.util.List) {
             return addAllList((java.util.List<E>) c);
         } else {
@@ -154,7 +154,7 @@ abstract class List<E> implements java.util.List<E> {
     }
 
     @Override
-    public boolean addAll(int index, @NotNull Collection<? extends E> c) {
+    public final boolean addAll(int index, @NotNull Collection<? extends E> c) {
         if (c instanceof java.util.List) {
             return addAllList(index, (java.util.List<E>) c);
         } else {
@@ -163,7 +163,7 @@ abstract class List<E> implements java.util.List<E> {
     }
 
     @Override
-    public boolean removeAll(@NotNull Collection<?> c) {
+    public final boolean removeAll(@NotNull Collection<?> c) {
         if (c instanceof java.util.List) {
             return removeAllList((java.util.List) c);
         } else {
@@ -172,7 +172,7 @@ abstract class List<E> implements java.util.List<E> {
     }
 
     @Override
-    public boolean retainAll(@NotNull Collection<?> c) {
+    public final boolean retainAll(@NotNull Collection<?> c) {
         if (c instanceof java.util.List) {
             return retainAllList((java.util.List) c);
         } else {

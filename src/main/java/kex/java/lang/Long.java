@@ -32,6 +32,7 @@ import org.vorpal.research.kex.intrinsics.UnknownIntrinsics;
 
 import java.lang.annotation.Native;
 import java.math.BigInteger;
+import java.lang.Object;
 
 
 /**
